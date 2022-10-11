@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+<div class="row">
+	<!-- ET -->
+	<div class="col-md-6 col-sm-12">
+		<div class="m-4 p-4 border border-dark rounded">
+			<h3 class="mb-4 fw-bold text-center">Enter Text or Use Mic</h3>
+			
+			<form action="" method="post" class="d-flex justify-content-center align-content-center">
+				{% csrf_token %}
+				<button type="button" name="button" class="mic btn btn-danger" onclick="record()">
+					<img class="rounded-circle" src="{% static 'mic.png' %}" height="32px" width="38px" />
+				</button>
+				<input type="text" name="sen" class="mytext" id="speechToText" placeholder="...">
+				
+				<input type="submit" name="submit" class="submit btn btn-primary">
+			</form>
+
+			<div class="fw-bold row mt-4">
+				<div class="col text-center">
+					<div class="text-bg-dark p-2 mb-2 fw-bold border border-dark rounded">Your text: </div>
+					<div>{{ text }}</div>
+				</div>
+				<div class="col text-center">
+					<div class="text-bg-dark p-2 mb-2 fw-bold border border-dark rounded">Keywords generated: </div>
+					<div>
+						<ul id="list" class="text-center">
+							{% for word in words %}
+							<li id="{{ i }}" class="me-4">
+								{{ word }}
+							</li>
+							{% endfor %}
+						</ul>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<!-- SLA -->
+	<div class="col-md-6 col-sm-12">
+		<div class="m-4 p-4 border border-dark rounded">
+			<h3 class="mb-4 fw-bold text-center">Sign Language Animation</h3>
+
+			<div class="text-center d-flex flex-column justify-content-center">
+				<button class="submit btn btn-warning" onclick="playPause()">Play/Pause</button>
+
+				<video class="m-4" id="videoPlayer" preload="auto" autoplay>
+					<source src="" type="video/mp4">
+					Your browser does not support HTML5 video.
+				</video>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	//webkitSpeechRecognition api for speech to text conversion
+	function record() {
+		var recognition = new webkitSpeechRecognition();
+		recognition.lang = 'en-IN';
+
+		recognition.onresult = function (event) {
+			console.log(event)
+			document.getElementById('speechToText').value = event.results[0][0].transcript;
+		}
+		recognition.start();
+	}
+	function play() {
+		var videoSource = new Array();
+		var videos = document.getElementById("list").getElementsByTagName("li");
+		var j;
+		for (j = 0; j < videos.length; j++) {
+			videoSource[j] = "/static/" + videos[j].innerHTML + ".mp4";
+		}
+
+		var i = 0; // define i
+		var videoCount = videoSource.length;
+
+		function videoPlay(videoNum) {
+			document.getElementById("list").getElementsByTagName("li")[videoNum].style.color = "#FFC107";
+			document.getElementById("list").getElementsByTagName("li")[videoNum].style.fontSize = "xx-large";
+			document.getElementById("videoPlayer").setAttribute("src", videoSource[videoNum]);
+			document.getElementById("videoPlayer").load();
+			document.getElementById("videoPlayer").play();
+
+		}
+		document.getElementById('videoPlayer').addEventListener('ended', myHandler, false);
+		document.getElementById("list").getElementsByTagName("li")[0].style.color = "#0B5ED7";
+		document.getElementById("list").getElementsByTagName("li")[0].style.fontSize = "xx-large";
+
+		videoPlay(0); // play the video
+
+		function myHandler() {
+			document.getElementById("list").getElementsByTagName("li")[i].style.color = "#feda6a";
+			document.getElementById("list").getElementsByTagName("li")[i].style.fontSize = "20px";
+			i++;
+			if (i == videoCount) {
+				document.getElementById("videoPlayer").pause();
+			}
+			else {
+				videoPlay(i);
+			}
+		}
+	}
+
+	function playPause() {
+		if (document.getElementById("videoPlayer").paused) {
+			play();
+		}
+		else {
+			document.getElementById("videoPlayer").pause();
+		}
+	}
+
+</script>
+
+
+{% endblock %}

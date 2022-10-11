@@ -1,0 +1,122 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+  <style>
+    .form-style {
+      font: 95% Arial, Helvetica, sans-serif;
+      max-width: 400px;
+      margin: 10px auto;
+      padding: 16px;
+
+    }
+
+    .form-style h1,
+    .form-style a {
+      padding: 20px 0;
+      font-size: 24px;
+      font-weight: bold;
+      text-align: center;
+      margin: -16px -16px 16px -16px;
+      color: #212529
+    }
+
+    .form-style input[type="text"],
+    .form-style input[type="password"],
+    .form-style input[type="date"],
+    .form-style input[type="datetime"],
+    .form-style input[type="email"],
+    .form-style input[type="number"],
+    .form-style input[type="search"],
+    .form-style input[type="time"],
+    .form-style input[type="url"],
+    .form-style textarea,
+    .form-style select {
+      -webkit-transition: all 0.30s ease-in-out;
+      -moz-transition: all 0.30s ease-in-out;
+      -ms-transition: all 0.30s ease-in-out;
+      -o-transition: all 0.30s ease-in-out;
+      outline: none;
+      box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      width: 100%;
+      background: #fff;
+      margin-bottom: 4%;
+      border: 1px solid #212529;
+      border-radius: 10px;
+      padding: 3%;
+      color: #212529;
+      font: 95% Arial, Helvetica, sans-serif;
+    }
+
+    .form-style input[type="text"]:focus,
+    .form-style input[type="password"]:focus,
+    .form-style input[type="date"]:focus,
+    .form-style input[type="datetime"]:focus,
+    .form-style input[type="email"]:focus,
+    .form-style input[type="number"]:focus,
+    .form-style input[type="search"]:focus,
+    .form-style input[type="time"]:focus,
+    .form-style input[type="url"]:focus,
+    .form-style textarea:focus,
+    .form-style select:focus {
+      box-shadow: 0 0 5px #212529;
+      padding: 3%;
+      border: 1px solid #212529;
+    }
+
+    .errorlist {
+      color: #FFC107;
+      font-weight: bold;
+    }
+  </style>
+  <title>Speech to Sign</title>
+</head>
+
+<body class="bg-danger">
+
+  <header class="p-3 text-bg-dark">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+          <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
+            <use xlink:href="#bootstrap"></use>
+          </svg>
+        </a>
+
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+          <li><a href="{% url 'home' %}" class="nav-link px-2 text-secondary">Home</a></li>
+          <li><a href="{% url 'animation' %}" class="nav-link px-2 text-white">Convert</a></li>
+          <li><a href="{% url 'about' %}" class="nav-link px-2 text-white">About</a></li>
+          <li><a href="{% url 'contact' %}" class="nav-link px-2 text-white">Contact</a></li>
+        </ul>
+
+        <div class="text-end">
+          {% if not user.is_authenticated %}
+          <a href="{% url 'signup' %}"><button type="button" class="btn btn-primary">Signup</button></a>
+          {% endif %}
+          {% if user.is_authenticated %}
+          <a href="{% url 'logout' %}"><button type="button" class="btn btn-primary">Logout</button></a>
+          {% else %}
+          <a href="{% url 'login' %}"><button type="button" class="btn btn-outline-light me-2">Login</button></a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    {% block content %}
+    {% endblock %}
+  </div>
+
+
+</body>
+
+</html>

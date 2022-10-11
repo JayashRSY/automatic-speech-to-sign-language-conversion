@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+<div class="mt-4 d-flex justify-content-center">
+	<div class="w-75 row mt-4 text-bg-warning border border-dark d-flex justify-content-center align-items-center rounded">
+		<div class="col-md-6 col-sm-12 p-4 d-flex justify-content-center">
+			<img class="border border-dark rounded-circle" src="{% static 'mypic.png' %}" alt="mypic" height="200px">
+		</div>
+		<div class="col-md-6 col-sm-12 p-4">
+			<strong class="text-primary">Made by</strong>
+			<h3 class="mb-0">Jayash Raj Singh Yadav</h3>
+			<div class="mb-1 text-secondary">ABES Engineering College</div>
+			<p class="card-text mb-auto">Minor project 2022</p>
+			<div class="pt-4 fw-bold">Thank you for visiting this website.</div>
+		</div>
+		<div class="text-center mb-4">Credits: Video clips used in his project have been taken from various sites on internet</div>
+	</div>
+
+</div>
+
+
+{% endblock %}

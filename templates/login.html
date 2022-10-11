@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="form-style">
+	<h1>Log in</h1>
+	<div>
+		<form class="" action="." method="post">
+			{% csrf_token %}
+			<br>
+			{{ form }}
+			<br>
+			{% if request.GET.next %}
+			<input type="hidden" name="next" value="{{ request.GET.next }}">
+			{% endif %}
+			<br>
+			<input class="submit btn btn-primary" type="submit" value="Login">
+		</form>
+	</div>
+</div>
+
+
+{% endblock %}
